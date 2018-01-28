@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<?php include 'dbConfig.php';?>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京游泳馆</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="nav--top">
+      <ul>
+          <li><a class="active" href="login.html">主页</a></li>
+          <li><a href="#contact">最新</a></li>
+          <li><a href="register.html">注册</a></li>
+          <li><a href="aboutme.html">关于我们</a></li>
+      </ul>
+  </nav>
+
+  <div id="contentbody">
+    <div class = "form">
+    	<!-- Login -->
+    	<form action = "login-form.php" method = "post">
+    		<input type = "text" name = "username" placeholder="用户名"/>
+    	    <br />
+    	    <br>
+    	    <input type = "password" name = "password" placeholder="密码"/>
+    	    <br>
+          <br>
+    	    <input class="w3-button w3-white w3-border w3-hover-blue" type = "submit" value = "登陆" />
+    	</form>
+    	<br>
+
+      新用户请先 <a href="register.html">注册</a>
+    </div>
+  </div>
+</body>
+</html>
