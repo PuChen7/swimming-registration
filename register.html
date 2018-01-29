@@ -19,10 +19,10 @@ function validateForm() {
     }
 
     // age validate
-    var age_year = document.forms["register_form"]["age_year"].value;
-    var age_month = document.forms["register_form"]["age_month"].value;
-    var age_day = document.forms["register_form"]["age_day"].value;
-    if (age_day == "" || age_month == "" || age_year == "" || isNaN(age_year) || isNaN(age_day) || isNaN(age_month) || age_year > 2018 || age_year.length < 4 || age_day > 31 || age_day < 1 || age_month > 12 || age_month < 1) {
+    var ageyear = document.forms["register_form"]["ageyear"].value;
+    var agemonth = document.forms["register_form"]["agemonth"].value;
+    var ageday = document.forms["register_form"]["ageday"].value;
+    if (ageday == "" || agemonth == "" || ageyear == "" || isNaN(ageyear) || isNaN(ageday) || isNaN(agemonth) || ageyear > 2018 || ageyear.length < 4 || ageday > 31 || ageday < 1 || agemonth > 12 || agemonth < 1) {
         alert("出生年月格式错误");
         return false;
     }
@@ -42,7 +42,7 @@ function validateForm() {
     }
 
     // password validate
-    var password = document.forms["register_form"]["password"].value;
+    var password = document.forms["register_form"]["pass"].value;
     if (password.length < 6 || password.length > 14) {
         alert("密码长度有误，请输入6至14位");
         return false;
@@ -73,14 +73,14 @@ function validateForm() {
     <p class="zc-title">注册个人账号</p>
     <div class = "form">
     	<!-- register -->
-    	<form name="register_form" action = "dbConfig.php" onsubmit="return validateForm()" method = "post">
+    	<form name="register_form" action = "db.php" onsubmit="return validateForm()" method = "post">
     		  姓名<br>
           <input type = "text" name = "username" placeholder="姓名"/>
     	    <br>
           出生年月<br>
-          <input latype = "text" name = "age_year" placeholder="年" size="5"/>
-          <input latype = "text" name = "age_month" placeholder="月" size="3"/>
-          <input latype = "text" name = "age_day" placeholder="日" size="3"/>
+          <input type = "text" name = "ageyear" placeholder="年" size="5"/>
+          <input type = "text" name = "agemonth" placeholder="月" size="3"/>
+          <input type = "text" name = "ageday" placeholder="日" size="3"/>
     	    <br>
           身份证号<br>
           <input type = "text" name = "id" placeholder="身份证号"/>
@@ -89,7 +89,7 @@ function validateForm() {
           <input type = "text" name = "school" placeholder="学校"/>
     	    <br>
           密码 (长度 6 - 14 位)<br>
-    	    <input type = "password" name = "password" placeholder="密码"/>
+    	    <input type = "password" name = "pass" placeholder="密码"/>
           <br>
           重新输入密码<br>
     	    <input type = "password" name = "repassword" placeholder="密码"/>
