@@ -31,7 +31,8 @@
     <?php
       session_start();
       if ($_SESSION["gender"] === "male"){echo "男";}
-      else {echo "女";}
+      else if ($_SESSION["gender"] === "female"){echo "女";}
+      else {echo "";}
     ?>
     <br>
     出生年月:

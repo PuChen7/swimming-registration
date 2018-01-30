@@ -21,10 +21,10 @@ $age = (string)$ageyear . ' ' . (string)$agemonth . ' ' . (string)$ageday;
 
 // global values for display at the panel
 $_SESSION["username"] = $username;
-$id = $_SESSION["id"] = $id;
-$school = $_SESSION["school"] = $school;
-$age = $_SESSION["age"] = $age;
-$gender = $_SESSION['gender'] = $gender;
+$_SESSION["id"] = $id;
+$_SESSION["school"] = $school;
+$_SESSION["age"] = $age;
+$_SESSION['gender'] = $gender;
 
 // check if user exists
 $check = "SELECT * from Person WHERE id='".$id."' ";
