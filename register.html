@@ -73,10 +73,14 @@ function validateForm() {
     <p class="zc-title">注册个人账号</p>
     <div class = "form">
     	<!-- register -->
-    	<form name="register_form" action = "db.php" onsubmit="return validateForm()" method = "post">
+    	<form name="register_form" action = "registerDB.php" onsubmit="return validateForm()" method = "post">
     		  姓名<br>
           <input type = "text" name = "username" placeholder="姓名"/>
     	    <br>
+          性别<br>
+          <input type="radio" name="gender" value="male" checked>男
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          <input type="radio" name="gender" value="female">女<br>
           出生年月<br>
           <input type = "text" name = "ageyear" placeholder="年" size="5"/>
           <input type = "text" name = "agemonth" placeholder="月" size="3"/>
@@ -95,7 +99,7 @@ function validateForm() {
     	    <input type = "password" name = "repassword" placeholder="密码"/>
     	    <br>
           <br>
-    	    <input style="margin-left:70px;" class="w3-button w3-white w3-border w3-hover-blue" type = "submit" value = "注册" />
+    	    <input style="margin-left:70px;" class="w3-btn w3-teal" type = "submit" value = "注册" />
     	</form>
 
     	<br>

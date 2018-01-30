@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 // check for database connection
 $conn=mysqli_connect("localhost","root","root","swim_registration");
 
@@ -11,6 +11,7 @@ die("Connection failed: " . mysqli_connect_error());
 
 $username = $_POST['username'];
 $id = $_POST['id'];
+$gender = $_POST['gender'];
 $ageyear = $_POST['ageyear'];
 $agemonth = $_POST['agemonth'];
 $ageday = $_POST['ageday'];
@@ -18,24 +19,31 @@ $school = $_POST['school'];
 $password = $_POST['pass'];
 $age = (string)$ageyear . ' ' . (string)$agemonth . ' ' . (string)$ageday;
 
+// global values for display at the panel
+$_SESSION["username"] = $username;
+$id = $_SESSION["id"] = $id;
+$school = $_SESSION["school"] = $school;
+$age = $_SESSION["age"] = $age;
+$gender = $_SESSION['gender'] = $gender;
+
 // check if user exists
-$check = "SELECT * FROM Person WHERE id = $id";
+$check = "SELECT * from Person WHERE id='".$id."' ";
 $rs = mysqli_query($conn,$check);
-$data = mysqli_fetch_array($rs, MYSQLI_NUM);
-if($data[0] > 1) {
+if(mysqli_num_rows($rs) > 0) {
   echo "<script>
     alert('此用户已经注册');
     window.location.href='register.html';
     </script>";
+    exit();
 }
 else {
   // insert into mysql database
-  $sql = "INSERT INTO Person (id, name, age, school) VALUES ('$id', '$username', '$age', '$school', '$password')";
+  $sql = "INSERT INTO Person (name, age, gender, id, school, password) VALUES ('$username', '$age', '$gender', '$id', '$school', '$password')";
 
   if ($conn->query($sql) === TRUE) {
     echo "<script>
-      alert('注册成功');
-      window.location.href='panel.html';
+      alert('注册成功!');
+      window.location.href='panel.php';
       </script>";
   } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
