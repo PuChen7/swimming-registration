@@ -53,31 +53,20 @@ tr:hover {background-color:#f5f5f5;}
     <?php
       session_start();
       echo $_SESSION["username"];
-    ?>
-    <br>
-    性别:
-    <?php
-      session_start();
+    
+      echo "<br>";
+      echo "性别:";
       if ($_SESSION["gender"] === "male"){echo "男";}
       else if ($_SESSION["gender"] === "female"){echo "女";}
       else {echo "";}
-    ?>
-    <br>
-    出生年月:
-    <?php
-      session_start();
+      echo "<br>";
+      echo "出生年月:";
       echo $_SESSION["age"];
-    ?>
-    <br>
-    身份证号:
-    <?php
-      session_start();
+      echo "<br>";
+      echo "身份证号:";
       echo $_SESSION["id"];
-    ?>
-    <br>
-    学校:
-    <?php
-      session_start();
+      echo "<br>";
+      echo "学校:";
       echo $_SESSION["school"];
     ?>
     </p>
