@@ -40,55 +40,108 @@ tr:hover {background-color:#f5f5f5;}
           <li><a href="#contact">最新</a></li>
           <li><a href="register.html">注册</a></li>
           <li><a href="aboutme.html">关于我们</a></li>
+          <li style="float:right;"><a class="active" href="logout.php">退出登陆</a></li>
+          <li style="float:right;"><a class="active" href="panel.php">个人主页</a></li>
       </ul>
   </nav>
 
   <div id="contentbody">
-    <p style="font-weight: bold; font-size: 15px;">
+    <p style="font-weight: bold; font-size: 18px;">
       <img src="user.png" width="30" height="30">
       个人信息:
     </p>
-    <p>
-    姓名:
-    <?php
-      session_start();
-      echo $_SESSION["username"];
     
-      echo "<br>";
-      echo "性别:";
-      if ($_SESSION["gender"] === "male"){echo "男";}
-      else if ($_SESSION["gender"] === "female"){echo "女";}
-      else {echo "";}
-      echo "<br>";
-      echo "出生年月:";
-      echo $_SESSION["age"];
-      echo "<br>";
-      echo "身份证号:";
-      echo $_SESSION["id"];
-      echo "<br>";
-      echo "学校:";
-      echo $_SESSION["school"];
-    ?>
-    </p>
-    <br>
-
-    <p style="font-weight: bold; font-size: 15px;">
-      <img src="swim.png" width="30" height="30">
-      已报项目:
-    </p>
-
+    
     <?php
       session_start();
-      // check for database connection
-      $conn=mysqli_connect("localhost","root","root","swim_registration");
+      if (isset($_SESSION['isloggedin']) && $_SESSION["isloggedin"] == true){
+        echo "<p>姓名:";
+        session_start();
+        echo $_SESSION["username"];
+        echo "<br>";
+        echo "性别:";
+        if ($_SESSION["gender"] === "male"){echo "男";}
+        else if ($_SESSION["gender"] === "female"){echo "女";}
+        else {echo "";}
+        echo "<br>";
+        echo "出生年月:";
+        echo $_SESSION["age"];
+        echo "<br>";
+        echo "身份证号:";
+        echo $_SESSION["id"];
+        echo "<br>";
+        echo "学校:";
+        echo $_SESSION["school"];
+        echo "<br><br>";
+        echo '<button class="w3-btn w3-teal" style="font-size: 13px;" onclick="changewindow()">修改个人资料</button>';
+        
+        echo '</p>
+        <br>
+        <p style="font-weight: bold; font-size: 18px;">
+          <img src="swim.png" width="30" height="30">
+          已注册的项目:
+        </p>';
 
-      if(!$conn)
-      {
-      die("Connection failed: " . mysqli_connect_error());
-      }
+        // check for database connection
+        $conn=mysqli_connect("localhost","root","root","swim_registration");
+      
+        if(!$conn)
+        {
+        die("Connection failed: " . mysqli_connect_error());
+        }
 
-      $sql = "SELECT * from Sport WHERE id = any (
-        select sportID from Subject where id = '".$_SESSION["id"]."' )";
+        $sql = "SELECT * from Sport WHERE id = any (
+          select sportID from Subject where id = '".$_SESSION["id"]."' )";
+
+        $query = mysqli_query($conn, $sql);
+
+        if($query) {
+          echo "<table>";
+          echo "<tr>
+            <th>项目</th>
+            <th>米数</th>
+            <th>比赛日期</th>
+            <th></th>
+            </tr>";
+          while ($row = mysqli_fetch_assoc($query)){
+            echo "<tr>";
+            echo "<td>{$row["sportname"]}</td>";
+            echo "<td>{$row["meter"]} 米</td>";
+            echo "<td>{$row["date"]}</td>";
+            echo "<td><a href='deletemajor.php?id=".$row['id']."'><button class='w3-btn w3-teal' style='font-size: 13px;' type='button'>删除</button></a></td>";
+            echo "</tr>";
+          }
+          echo "</table>";
+        }else {
+          echo "空";
+        }
+      
+      echo '
+      <script>
+        function changewindow(){
+          window.open("changewindow.php", "popup", "resizable=0, width=600,height=500");
+        }
+      </script>
+      <br>
+      
+      <p style="font-weight: bold; font-size: 18px;">
+        <img src="add.png" width="30" height="30">
+        可注册的项目:
+      </p>
+      ';
+      // <?php
+      // session_start();
+      // // check for database connection
+      // $conn=mysqli_connect("localhost","root","root","swim_registration");
+      // 
+      // if(!$conn)
+      // {
+      // die("Connection failed: " . mysqli_connect_error());
+      // }
+
+      // 可注册的内容
+      $sql = "SELECT * from Sport WHERE not id = any (
+        select sportID from Subject where id = '".$_SESSION["id"]."')";
 
       $query = mysqli_query($conn, $sql);
 
@@ -105,62 +158,18 @@ tr:hover {background-color:#f5f5f5;}
           echo "<td>{$row["sportname"]}</td>";
           echo "<td>{$row["meter"]} 米</td>";
           echo "<td>{$row["date"]}</td>";
-          echo "<td><a href='deletemajor.php?id=".$row['id']."'><button class='w3-btn w3-teal' type='button'>删除</button></a></td>";
+          echo "<td><a href='addmajor.php?id=".$row['id']."'>
+          <button class='w3-btn w3-teal' style='font-size: 13px;' type='button'>添加</button></a></td>";
           echo "</tr>";
         }
         echo "</table>";
       }else {
         echo "空";
       }
-    ?>
-    <script>
-      function changewindow(){
-        window.open("changewindow.php", "_blank", "width=600,height=500");
-      }
-    </script>
-    <br>
-    
-    <p style="font-weight: bold; font-size: 15px;">
-      <img src="swim.png" width="30" height="30">
-      可注册的项目:
-    </p>
-    
-    <?php
-    session_start();
-    // check for database connection
-    $conn=mysqli_connect("localhost","root","root","swim_registration");
-
-    if(!$conn)
-    {
-    die("Connection failed: " . mysqli_connect_error());
+    } else {
+      echo "请先登录";
     }
-
-    // 可注册的内容
-    $sql = "SELECT * from Sport WHERE not id = any (
-      select sportID from Subject where id = '".$_SESSION["id"]."')";
-
-    $query = mysqli_query($conn, $sql);
-
-    if($query) {
-      echo "<table>";
-      echo "<tr>
-        <th>项目</th>
-        <th>米数</th>
-        <th>比赛日期</th>
-        <th></th>
-        </tr>";
-      while ($row = mysqli_fetch_assoc($query)){
-        echo "<tr>";
-        echo "<td>{$row["sportname"]}</td>";
-        echo "<td>{$row["meter"]} 米</td>";
-        echo "<td>{$row["date"]}</td>";
-        echo "<td><a href='addmajor.php?id=".$row['id']."'><button class='w3-btn w3-teal' type='button'>添加</button></a></td>";
-        echo "</tr>";
-      }
-      echo "</table>";
-    }else {
-      echo "空";
-    }
+      
     ?>
   </div>
 </body>

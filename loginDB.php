@@ -25,6 +25,7 @@ if(mysqli_num_rows($qpass) > 0) {
   $_SESSION["school"] = $row[4];
   $_SESSION["age"] = $row[1];
   $_SESSION['gender'] = $row[2];
+  $_SESSION['isloggedin'] = true;
 
   echo "<script>
     alert('登陆成功!');
