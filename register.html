@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="register.css" />
-
 <!-- Form Validation -->
 <script>
 function validateForm() {
@@ -17,7 +16,6 @@ function validateForm() {
         alert("姓名为空或格式错误");
         return false;
     }
-
     // age validate
     var ageyear = document.forms["register_form"]["ageyear"].value;
     var agemonth = document.forms["register_form"]["agemonth"].value;
@@ -26,28 +24,24 @@ function validateForm() {
         alert("出生年月格式错误");
         return false;
     }
-
     // id validate
     var id = document.forms["register_form"]["id"].value;
     if (id == "" || isNaN(id) || id.toString().length < 18) {
         alert("身份证号格式错误");
         return false;
     }
-
     // school validate
     var school = document.forms["register_form"]["school"].value;
     if (school == "") {
         alert("学校名称不能为空");
         return false;
     }
-
     // password validate
     var password = document.forms["register_form"]["pass"].value;
     if (password.length < 6 || password.length > 14) {
         alert("密码长度有误，请输入6至14位");
         return false;
     }
-
     // repassword validate
     var repassword = document.forms["register_form"]["repassword"].value;
     if (repassword !== password) {
@@ -56,7 +50,6 @@ function validateForm() {
     }
 }
 </script>
-
 </head>
 <body>
   <!-- Navigation Bar -->
@@ -68,7 +61,6 @@ function validateForm() {
           <li><a href="aboutme.html">关于我们</a></li>
       </ul>
   </nav>
-
   <div id="contentbody">
     <p class="zc-title">注册个人账号</p>
     <div class = "form">
@@ -101,10 +93,7 @@ function validateForm() {
           <br>
     	    <input style="margin-left:70px;" class="w3-btn w3-teal" type = "submit" value = "注册" />
     	</form>
-
     	<br>
-
-
     </div>
   </div>
 </body>

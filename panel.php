@@ -108,7 +108,7 @@ tr:hover {background-color:#f5f5f5;}
         echo "<tr>
           <th>项目</th>
           <th>米数</th>
-          <th>日期</th>
+          <th>比赛日期</th>
           <th></th>
           </tr>";
         while ($row = mysqli_fetch_assoc($query)){
@@ -116,23 +116,63 @@ tr:hover {background-color:#f5f5f5;}
           echo "<td>{$row["sportname"]}</td>";
           echo "<td>{$row["meter"]} 米</td>";
           echo "<td>{$row["date"]}</td>";
-          echo '<td><button onclick="changewindow()" class="w3-btn w3-teal">修改</button</td>';
+          echo "<td><a href='deletemajor.php?id=".$row['id']."'><button class='w3-btn w3-teal' type='button'>删除</button></a></td>";
           echo "</tr>";
         }
         echo "</table>";
       }else {
         echo "空";
       }
-
     ?>
     <script>
       function changewindow(){
-        window.open("changewindow.html", "_blank", "width=600,height=500");
+        window.open("changewindow.php", "_blank", "width=600,height=500");
       }
     </script>
     <br>
+    
+    <p style="font-weight: bold; font-size: 15px;">
+      <img src="swim.png" width="30" height="30">
+      可注册的项目:
+    </p>
+    
+    <?php
+    session_start();
+    // check for database connection
+    $conn=mysqli_connect("localhost","root","root","swim_registration");
 
-    <a style="font-weight: bold; color: #008080;" href="addmajor.php">添加新项目...</a>
+    if(!$conn)
+    {
+    die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // 可注册的内容
+    $sql = "SELECT * from Sport WHERE not id = any (
+      select sportID from Subject where id = '".$_SESSION["id"]."')";
+
+    $query = mysqli_query($conn, $sql);
+
+    if($query) {
+      echo "<table>";
+      echo "<tr>
+        <th>项目</th>
+        <th>米数</th>
+        <th>比赛日期</th>
+        <th></th>
+        </tr>";
+      while ($row = mysqli_fetch_assoc($query)){
+        echo "<tr>";
+        echo "<td>{$row["sportname"]}</td>";
+        echo "<td>{$row["meter"]} 米</td>";
+        echo "<td>{$row["date"]}</td>";
+        echo "<td><a href='addmajor.php?id=".$row['id']."'><button class='w3-btn w3-teal' type='button'>添加</button></a></td>";
+        echo "</tr>";
+      }
+      echo "</table>";
+    }else {
+      echo "空";
+    }
+    ?>
   </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
 
   $id = $_GET["id"];
 
-  $sql = "INSERT INTO Subject (id, sportID) VALUES ('".$_SESSION["id"]."', '".$id."')";
+  $sql = "delete from Subject where sportID = $id";
   if ($conn->query($sql) === TRUE) {
     header('Location: panel.php');
   } else {
