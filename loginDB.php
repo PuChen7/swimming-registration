@@ -16,21 +16,24 @@ $password = $_POST['password'];
 $checkpass = "SELECT * from Person WHERE name='".$username."' and password = '".$password."' ";
 $qpass = mysqli_query($conn,$checkpass);
 
-if(mysqli_num_rows($qpass) > 0) {
+if(mysqli_num_rows($qpass) > 0) {  
+  if ($username == "管理员" && $password == "123456"){
+    header('Location: adminpanel.php');
+  } else {
+    $row = mysqli_fetch_row($qpass);
 
-  $row = mysqli_fetch_row($qpass);
+    $_SESSION["username"] = $username;
+    $_SESSION["id"] = $row[3];
+    $_SESSION["school"] = $row[4];
+    $_SESSION["age"] = $row[1];
+    $_SESSION['gender'] = $row[2];
+    $_SESSION['isloggedin'] = true;
 
-  $_SESSION["username"] = $username;
-  $_SESSION["id"] = $row[3];
-  $_SESSION["school"] = $row[4];
-  $_SESSION["age"] = $row[1];
-  $_SESSION['gender'] = $row[2];
-  $_SESSION['isloggedin'] = true;
-
-  echo "<script>
-    alert('登陆成功!');
-    window.location.href='panel.php';
-    </script>";
+    echo "<script>
+      alert('登陆成功!');
+      window.location.href='panel.php';
+      </script>";
+  }
 }
 else {
   echo "<script>
