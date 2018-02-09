@@ -23,10 +23,11 @@ if(mysqli_num_rows($qpass) > 0) {
     $row = mysqli_fetch_row($qpass);
 
     $_SESSION["username"] = $username;
-    $_SESSION["id"] = $row[3];
-    $_SESSION["school"] = $row[4];
+    $_SESSION["id"] = $row[4];
+    $_SESSION["school"] = $row[5];
     $_SESSION["age"] = $row[1];
-    $_SESSION['gender'] = $row[2];
+    $_SESSION["agenum"] = $row[2];
+    $_SESSION['gender'] = $row[3];
     $_SESSION['isloggedin'] = true;
 
     echo "<script>

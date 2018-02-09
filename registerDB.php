@@ -18,13 +18,14 @@ $ageday = $_POST['ageday'];
 $school = $_POST['school'];
 $password = $_POST['pass'];
 $age = (string)$ageyear . ' ' . (string)$agemonth . ' ' . (string)$ageday;
-
+$agenum = date("Y") - $ageyear;
 // global values for display at the panel
 $_SESSION["username"] = $username;
 $_SESSION["id"] = $id;
 $_SESSION["school"] = $school;
 $_SESSION["age"] = $age;
 $_SESSION['gender'] = $gender;
+$_SESSION["agenum"] = $agenum;
 
 // check if user exists
 $check = "SELECT * from Person WHERE id='".$id."' ";
@@ -37,8 +38,9 @@ if(mysqli_num_rows($rs) > 0) {
     exit();
 }
 else {
+  
   // insert into mysql database
-  $sql = "INSERT INTO Person (name, age, gender, id, school, password) VALUES ('$username', '$age', '$gender', '$id', '$school', '$password')";
+  $sql = "INSERT INTO Person (name, age, agenum, gender, id, school, password) VALUES ('$username', '$age', '$agenum', '$gender', '$id', '$school', '$password')";
 
   if ($conn->query($sql) === TRUE) {
     echo "<script>

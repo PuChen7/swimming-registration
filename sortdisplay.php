@@ -55,12 +55,13 @@
       if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
       }
-      
       if ($_POST["radiosort"] == "name"){
-        $sql = "select * from Person where id = (select id from subject x) order by name";
+        $sql = "select * from Person where id = (select id from subject) order by name";
         $query = mysqli_query($conn, $sql);
         if($query) {
-          
+          while ($row = mysqli_fetch_assoc($query)){
+            echo "{$row["name"]}";
+          }
         }
       } else if ($_POST["radiosort"] == "gender"){
         echo "gender";

@@ -51,7 +51,6 @@ tr:hover {background-color:#f5f5f5;}
       个人信息:
     </p>
     
-    
     <?php
       session_start();
       if (isset($_SESSION['isloggedin']) && $_SESSION["isloggedin"] == true){
@@ -60,12 +59,15 @@ tr:hover {background-color:#f5f5f5;}
         echo $_SESSION["username"];
         echo "<br>";
         echo "性别:";
-        if ($_SESSION["gender"] === "male"){echo "男";}
-        else if ($_SESSION["gender"] === "female"){echo "女";}
+        if ($_SESSION["gender"] == "male"){echo "男";}
+        else if ($_SESSION["gender"] == "female"){echo "女";}
         else {echo "";}
         echo "<br>";
         echo "出生年月:";
         echo $_SESSION["age"];
+        echo "<br>";
+        echo "年龄:";
+        echo $_SESSION["agenum"];
         echo "<br>";
         echo "身份证号:";
         echo $_SESSION["id"];
