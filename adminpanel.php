@@ -58,69 +58,91 @@ tr:hover {background-color:#f5f5f5;}
       <input type="radio" name="radiosort" value="age">年龄
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <input type="radio" name="radiosort" value="subject">项目
+      <select>
+        <option value="w50">蛙泳50米</option>
+        <option value="saab">蛙泳100米</option>
+        <option value="opel">蛙泳2000米</option>
+        <option value="audi">蝶泳50米</option>
+        <option value="audi">蝶泳100米</option>
+        <option value="audi">蝶泳200米</option>
+        <option value="audi">仰泳50米</option>
+        <option value="audi">仰泳100米</option>
+        <option value="audi">仰泳200米</option>
+        <option value="audi">自由泳50米</option>
+        <option value="audi">自由泳100米</option>
+        <option value="audi">自由泳200米</option>
+        <option value="audi">自由泳400米</option>
+        <option value="audi">混合泳200米</option>
+      </select>
       <input style="margin-left:70px;" class="w3-btn w3-teal" type = "submit" value = "提交" />
     </form>
     
     <?php 
-      // check for database connection
-      $conn=mysqli_connect("localhost","root","root","swim_registration");
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-      }
-      
-      $sql = "";
-      // 分别排列显示
-      if ($_POST["radiosort"] == "name" || $_POST["radiosort"] == "gender" || $_POST["radiosort"] == "age"){
-        // 按姓名排列显示
-        if ($_POST["radiosort"] == "name"){
-          echo "<strong>按姓名排列显示全部注册运动员：</strong>";
-          $sql = "select * from Person where id in (select distinct id from Subject) order by name";
-        }
-        // 按性别排列显示
-        else if ($_POST["radiosort"] == "gender"){
-          echo "<strong>按性别排列显示全部注册运动员：</strong>";
-          $sql = "select * from Person where id in (select distinct id from Subject) order by gender";
-        }
-        // 按年龄排列显示
-        else if ($_POST["radiosort"] == "age"){
-          echo "<strong>按年龄排列显示全部注册运动员：</strong>";
-          $sql = "select * from Person where id in (select distinct id from Subject) order by agenum";
+      session_start();
+      if (isset($_SESSION['isAdmin']) && $_SESSION["isAdmin"] == true){
+        // check for database connection
+        $conn=mysqli_connect("localhost","root","root","swim_registration");
+        if (!$conn) {
+          die("Connection failed: " . mysqli_connect_error());
         }
         
-        echo "<table>";
-        echo "<tr>
-          <th>姓名</th>
-          <th>出生年月</th>
-          <th>年龄</th>
-          <th>性别</th>
-          <th>身份证</th>
-          <th>学校</th>
-          </tr>";
-        
-        $query = mysqli_query($conn, $sql);
-        if($query) {
-          while ($row = mysqli_fetch_assoc($query)){
-            echo "<tr>";
-            echo "<td>{$row["name"]}</td>";
-            echo "<td>{$row["age"]}</td>";
-            echo "<td>{$row["agenum"]}</td>";
-            if ($row["gender"] == "male"){
-              echo "<td>男</td>";
-            } else if ($row["gender"] == "female"){
-              echo "<td>女</td>";
-            }else{
-              echo "<td>空</td>";
-            }
-            echo "<td>{$row["id"]}</td>";
-            echo "<td>{$row["school"]}</td>";
-            echo "</tr>";
+        $sql = "";
+        // 分别排列显示
+        if ($_POST["radiosort"] == "name" || $_POST["radiosort"] == "gender" || $_POST["radiosort"] == "age"){
+          // 按姓名排列显示
+          if ($_POST["radiosort"] == "name"){
+            echo "<strong>按姓名排列显示全部注册运动员：</strong>";
+            $sql = "select * from Person where id in (select distinct id from Subject) order by name";
           }
-          echo "</table>";
+          // 按性别排列显示
+          else if ($_POST["radiosort"] == "gender"){
+            echo "<strong>按性别排列显示全部注册运动员：</strong>";
+            $sql = "select * from Person where id in (select distinct id from Subject) order by gender";
+          }
+          // 按年龄排列显示
+          else if ($_POST["radiosort"] == "age"){
+            echo "<strong>按年龄排列显示全部注册运动员：</strong>";
+            $sql = "select * from Person where id in (select distinct id from Subject) order by agenum";
+          }
+          
+          echo "<table>";
+          echo "<tr>
+            <th>姓名</th>
+            <th>出生年月</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>身份证</th>
+            <th>学校</th>
+            </tr>";
+          
+          $query = mysqli_query($conn, $sql);
+          if($query) {
+            while ($row = mysqli_fetch_assoc($query)){
+              echo "<tr>";
+              echo "<td>{$row["name"]}</td>";
+              echo "<td>{$row["age"]}</td>";
+              echo "<td>{$row["agenum"]}</td>";
+              if ($row["gender"] == "male"){
+                echo "<td>男</td>";
+              } else if ($row["gender"] == "female"){
+                echo "<td>女</td>";
+              }else{
+                echo "<td>空</td>";
+              }
+              echo "<td>{$row["id"]}</td>";
+              echo "<td>{$row["school"]}</td>";
+              echo "</tr>";
+            }
+            echo "</table>";
+          }
+        } 
+        else if ($_POST["radiosort"] == "subject"){
+          echo "subject";
         }
-      } 
-      else if ($_POST["radiosort"] == "subject"){
-        echo "subject";
+      } else {
+        echo "请先登录";
       }
+    
     ?>
   </div>
 </body>

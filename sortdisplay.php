@@ -28,7 +28,7 @@
           <li><a href="register.html">注册</a></li>
           <li><a href="aboutme.html">关于我们</a></li>
           <li style="float:right;"><a class="active" href="logout.php">退出登陆</a></li>
-          <li style="float:right;"><a class="active" href="panel.php">个人主页</a></li>
+          <li style="float:right;"><a class="active" href="adminpanel.php">个人主页</a></li>
       </ul>
   </nav>
 
@@ -46,30 +46,53 @@
       <input type="radio" name="radiosort" value="age">年龄
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <input type="radio" name="radiosort" value="subject">项目
+      <select>
+        <option value="w50">蛙泳50米</option>
+        <option value="saab">蛙泳100米</option>
+        <option value="opel">蛙泳2000米</option>
+        <option value="audi">蝶泳50米</option>
+        <option value="audi">蝶泳100米</option>
+        <option value="audi">蝶泳200米</option>
+        <option value="audi">仰泳50米</option>
+        <option value="audi">仰泳100米</option>
+        <option value="audi">仰泳200米</option>
+        <option value="audi">自由泳50米</option>
+        <option value="audi">自由泳100米</option>
+        <option value="audi">自由泳200米</option>
+        <option value="audi">自由泳400米</option>
+        <option value="audi">混合泳200米</option>
+      </select>
+      
       <input style="margin-left:70px;" class="w3-btn w3-teal" type = "submit" value = "提交" />
     </form>
     
     <?php 
-      // check for database connection
-      $conn=mysqli_connect("localhost","root","root","swim_registration");
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-      }
-      if ($_POST["radiosort"] == "name"){
-        $sql = "select * from Person where id = (select id from subject) order by name";
-        $query = mysqli_query($conn, $sql);
-        if($query) {
-          while ($row = mysqli_fetch_assoc($query)){
-            echo "{$row["name"]}";
-          }
+      session_start();
+      if (isset($_SESSION['isloggedin']) && $_SESSION["isloggedin"] == true){
+        // check for database connection
+        $conn=mysqli_connect("localhost","root","root","swim_registration");
+        if (!$conn) {
+          die("Connection failed: " . mysqli_connect_error());
         }
-      } else if ($_POST["radiosort"] == "gender"){
-        echo "gender";
-      } else if ($_POST["radiosort"] == "age"){
-        echo "age";
-      } else if ($_POST["radiosort"] == "subject"){
-        echo "subject";
+        if ($_POST["radiosort"] == "name"){
+          $sql = "select * from Person where id = (select id from subject) order by name";
+          $query = mysqli_query($conn, $sql);
+          if($query) {
+            while ($row = mysqli_fetch_assoc($query)){
+              echo "{$row["name"]}";
+            }
+          }
+        } else if ($_POST["radiosort"] == "gender"){
+          echo "gender";
+        } else if ($_POST["radiosort"] == "age"){
+          echo "age";
+        } else if ($_POST["radiosort"] == "subject"){
+          echo "subject";
+        }
+      } else {
+        echo "请先登录";
       }
+      
     ?>
   </div>
 </body>

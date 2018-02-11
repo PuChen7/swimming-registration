@@ -19,6 +19,7 @@ $qpass = mysqli_query($conn,$checkpass);
 if(mysqli_num_rows($qpass) > 0) {  
   if ($username == "管理员" && $password == "123456"){
     header('Location: adminpanel.php');
+    $_SESSION['isAdmin'] = true;
   } else {
     $row = mysqli_fetch_row($qpass);
 
