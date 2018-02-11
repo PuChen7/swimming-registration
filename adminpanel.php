@@ -58,21 +58,21 @@ tr:hover {background-color:#f5f5f5;}
       <input type="radio" name="radiosort" value="age">年龄
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <input type="radio" name="radiosort" value="subject">项目
-      <select>
-        <option value="w50">蛙泳50米</option>
-        <option value="saab">蛙泳100米</option>
-        <option value="opel">蛙泳2000米</option>
-        <option value="audi">蝶泳50米</option>
-        <option value="audi">蝶泳100米</option>
-        <option value="audi">蝶泳200米</option>
-        <option value="audi">仰泳50米</option>
-        <option value="audi">仰泳100米</option>
-        <option value="audi">仰泳200米</option>
-        <option value="audi">自由泳50米</option>
-        <option value="audi">自由泳100米</option>
-        <option value="audi">自由泳200米</option>
-        <option value="audi">自由泳400米</option>
-        <option value="audi">混合泳200米</option>
+      <select name = "subjectSelect">
+        <option value="0">蛙泳50米</option>
+        <option value="1">蛙泳100米</option>
+        <option value="2">蛙泳200米</option>
+        <option value="3">蝶泳50米</option>
+        <option value="4">蝶泳100米</option>
+        <option value="5">蝶泳200米</option>
+        <option value="6">仰泳50米</option>
+        <option value="7">仰泳100米</option>
+        <option value="8">仰泳200米</option>
+        <option value="9">自由泳50米</option>
+        <option value="10">自由泳100米</option>
+        <option value="11">自由泳200米</option>
+        <option value="12">自由泳400米</option>
+        <option value="13">混合泳200米</option>
       </select>
       <input style="margin-left:70px;" class="w3-btn w3-teal" type = "submit" value = "提交" />
     </form>
@@ -137,7 +137,17 @@ tr:hover {background-color:#f5f5f5;}
           }
         } 
         else if ($_POST["radiosort"] == "subject"){
-          echo "subject";
+          $selected_val = $_POST['subjectSelect'];
+          $title_sql = "select * from Sport where id = " .$selected_val;
+          $title_query = mysqli_query($conn, $title_sql);
+          if($title_query) {
+            $row = mysqli_fetch_assoc($title_query);
+            echo "<strong>全部注册 {$row["sportname"]}{$row["meter"]}米 运动员：</strong>";
+          } else {
+            
+          }
+          
+          //$sql = "select * from Person where id in (select distinct id from Subject) order by agenum";
         }
       } else {
         echo "请先登录";
