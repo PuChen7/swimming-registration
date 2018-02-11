@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="panel.css" />
+
 <style>
 table {
     border-collapse: collapse;
@@ -51,14 +52,15 @@ tr:hover {background-color:#f5f5f5;}
     </p>
     <br>
     <form name="sort_form" action = "adminpanel.php" method = "post">
-      <input type="radio" name="radiosort" value="name" checked>姓名
+      <input type="radio" id = "name" name="radiosort" value="name">姓名
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <input type="radio" name="radiosort" value="gender">性别
+      <input type="radio" id = "gender" name="radiosort" value="gender">性别
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <input type="radio" name="radiosort" value="age">年龄
+      <input type="radio" id = "age" name="radiosort" value="age">年龄
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <input type="radio" name="radiosort" value="subject">项目
+      <input type="radio" id = "subject" name="radiosort" value="subject">项目
       <select name = "subjectSelect">
+        <option value="">选择需要查看的项目</option>
         <option value="0">蛙泳50米</option>
         <option value="1">蛙泳100米</option>
         <option value="2">蛙泳200米</option>
@@ -74,86 +76,38 @@ tr:hover {background-color:#f5f5f5;}
         <option value="12">自由泳400米</option>
         <option value="13">混合泳200米</option>
       </select>
-      <input style="margin-left:70px;" class="w3-btn w3-teal" type = "submit" value = "提交" />
     </form>
     
-    <?php 
-      session_start();
-      if (isset($_SESSION['isAdmin']) && $_SESSION["isAdmin"] == true){
-        // check for database connection
-        $conn=mysqli_connect("localhost","root","root","swim_registration");
-        if (!$conn) {
-          die("Connection failed: " . mysqli_connect_error());
-        }
-        
-        $sql = "";
-        // 分别排列显示
-        if ($_POST["radiosort"] == "name" || $_POST["radiosort"] == "gender" || $_POST["radiosort"] == "age"){
-          // 按姓名排列显示
-          if ($_POST["radiosort"] == "name"){
-            echo "<strong>按姓名排列显示全部注册运动员：</strong>";
-            $sql = "select * from Person where id in (select distinct id from Subject) order by name";
-          }
-          // 按性别排列显示
-          else if ($_POST["radiosort"] == "gender"){
-            echo "<strong>按性别排列显示全部注册运动员：</strong>";
-            $sql = "select * from Person where id in (select distinct id from Subject) order by gender";
-          }
-          // 按年龄排列显示
-          else if ($_POST["radiosort"] == "age"){
-            echo "<strong>按年龄排列显示全部注册运动员：</strong>";
-            $sql = "select * from Person where id in (select distinct id from Subject) order by agenum";
-          }
-          
-          echo "<table>";
-          echo "<tr>
-            <th>姓名</th>
-            <th>出生年月</th>
-            <th>年龄</th>
-            <th>性别</th>
-            <th>身份证</th>
-            <th>学校</th>
-            </tr>";
-          
-          $query = mysqli_query($conn, $sql);
-          if($query) {
-            while ($row = mysqli_fetch_assoc($query)){
-              echo "<tr>";
-              echo "<td>{$row["name"]}</td>";
-              echo "<td>{$row["age"]}</td>";
-              echo "<td>{$row["agenum"]}</td>";
-              if ($row["gender"] == "male"){
-                echo "<td>男</td>";
-              } else if ($row["gender"] == "female"){
-                echo "<td>女</td>";
-              }else{
-                echo "<td>空</td>";
-              }
-              echo "<td>{$row["id"]}</td>";
-              echo "<td>{$row["school"]}</td>";
-              echo "</tr>";
-            }
-            echo "</table>";
-          }
-        } 
-        else if ($_POST["radiosort"] == "subject"){
-          $selected_val = $_POST['subjectSelect'];
-          $title_sql = "select * from Sport where id = " .$selected_val;
-          $title_query = mysqli_query($conn, $title_sql);
-          if($title_query) {
-            $row = mysqli_fetch_assoc($title_query);
-            echo "<strong>全部注册 {$row["sportname"]}{$row["meter"]}米 运动员：</strong>";
-          } else {
-            
-          }
-          
-          //$sql = "select * from Person where id in (select distinct id from Subject) order by agenum";
-        }
-      } else {
-        echo "请先登录";
-      }
+    <div id="responsecontainer" align="center">
+
+    </div>
     
-    ?>
   </div>
 </body>
+<!-- <script type="text/javascript" src="jquery.js"> </script> -->
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+   $("input").click(function() {                
+     var selected = $('input[name=radiosort]:checked').val();
+     $.ajax({    //create an ajax request to display.php
+       type: "POST",
+       url: "adminDB.php",
+       async: false,
+       data: {
+         "done": 1,
+         "type": selected
+       },          
+       success: function(response){                    
+           $("#responsecontainer").html(response); 
+           //alert(response);
+       }
+
+   });
+});
+});
+
+</script>
+
 </html>
