@@ -58,8 +58,8 @@ tr:hover {background-color:#f5f5f5;}
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
       <input type="radio" id = "age" name="radiosort" value="age">年龄
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      <input type="radio" id = "subject" name="radiosort" value="subject">项目
-      <select name = "subjectSelect">
+      项目
+      <select id = "subjectSelect">
         <option value="">选择需要查看的项目</option>
         <option value="0">蛙泳50米</option>
         <option value="1">蛙泳100米</option>
@@ -77,10 +77,8 @@ tr:hover {background-color:#f5f5f5;}
         <option value="13">混合泳200米</option>
       </select>
     </form>
-    
-    <div id="responsecontainer" align="center">
-
-    </div>
+    <br>
+    <div id="responsecontainer" align="center"></div>
     
   </div>
 </body>
@@ -89,23 +87,37 @@ tr:hover {background-color:#f5f5f5;}
 <script type="text/javascript">
 
 $(document).ready(function() {
-   $("input").click(function() {                
+  $("input").click(function() {                
      var selected = $('input[name=radiosort]:checked').val();
-     $.ajax({    //create an ajax request to display.php
+     $.ajax({   
        type: "POST",
        url: "adminDB.php",
        async: false,
        data: {
-         "done": 1,
          "type": selected
        },          
-       success: function(response){                    
-           $("#responsecontainer").html(response); 
-           //alert(response);
+       success: function(response){
+         $("#responsecontainer").html(response); 
        }
 
-   });
-});
+      });
+    });
+    
+    $("select").click(function() {                
+      var dropdown = $('#subjectSelect').find(":selected").val();
+      $.ajax({   
+        type: "POST",
+        url: "adminDB.php",
+        async: false,
+        data: {
+          "select": dropdown
+        },          
+        success: function(response){
+          $("#responsecontainer").html(response); 
+        }
+    });
+ });
+    
 });
 
 </script>
