@@ -3,7 +3,6 @@
   session_start();
   if (isset($_SESSION['isAdmin']) && $_SESSION["isAdmin"] == true){    
     
-    // connect to database
     include 'connect.php';
     
     $sql = "";
