@@ -4,7 +4,6 @@
 session_start();
 $_SESSION["isloggedin"] = false;
 unset($_SESSION['isloggedin']); 
-if (session_destroy()){
-    header('Location: login.html');
-}
+session_destroy();
+header('Location: login.html');
 ?>

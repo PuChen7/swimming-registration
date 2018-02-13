@@ -36,7 +36,7 @@ tr:hover {background-color:#f5f5f5;}
   <!-- Navigation Bar -->
   <nav class="nav--top">
       <ul>
-          <li><a class="active" href="panel.php">主页</a></li>
+          <li><a class="active" href="login.html">主页</a></li>
           <li><a href="#contact">最新</a></li>
           <li><a href="register.html">注册</a></li>
           <li><a href="aboutme.html">关于我们</a></li>
@@ -157,8 +157,8 @@ tr:hover {background-color:#f5f5f5;}
     } else {
       echo "请先登录";
     }
+      
     ?>
   </div>
 </body>
-
 </html>
