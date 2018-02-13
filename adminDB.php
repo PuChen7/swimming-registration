@@ -62,7 +62,7 @@
           $row = mysqli_fetch_assoc($title_query);
           
           
-          $person_sql = "select * from Person where id in (select id from Subject where sportID = " .$selected_val. ")";
+          $person_sql = "select * from Person where id in (select id from Subject where sportID = " .$selected_val. ") order by name";
           
           $person_query = mysqli_query($conn, $person_sql);
           if($person_query) {
