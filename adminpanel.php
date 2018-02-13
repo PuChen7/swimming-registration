@@ -82,10 +82,10 @@ tr:hover {background-color:#f5f5f5;}
     
   </div>
 </body>
-<!-- <script type="text/javascript" src="jquery.js"> </script> -->
+
+<!-- JQuery for dealing with display -->
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
 <script type="text/javascript">
-
 $(document).ready(function() {
   $("input").click(function() {                
      var selected = $('input[name=radiosort]:checked').val();
@@ -116,8 +116,7 @@ $(document).ready(function() {
           $("#responsecontainer").html(response); 
         }
     });
- });
-    
+ });  
 });
 
 </script>

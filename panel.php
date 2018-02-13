@@ -84,13 +84,8 @@ tr:hover {background-color:#f5f5f5;}
           已注册的项目:
         </p>';
 
-        // check for database connection
-        $conn=mysqli_connect("localhost","root","root","swim_registration");
-      
-        if(!$conn)
-        {
-        die("Connection failed: " . mysqli_connect_error());
-        }
+        // connect to database
+        include 'connect.php';
 
         $sql = "SELECT * from Sport WHERE id = any (
           select sportID from Subject where id = '".$_SESSION["id"]."' )";
@@ -131,15 +126,6 @@ tr:hover {background-color:#f5f5f5;}
         可注册的项目:
       </p>
       ';
-      // <?php
-      // session_start();
-      // // check for database connection
-      // $conn=mysqli_connect("localhost","root","root","swim_registration");
-      // 
-      // if(!$conn)
-      // {
-      // die("Connection failed: " . mysqli_connect_error());
-      // }
 
       // 可注册的内容
       $sql = "SELECT * from Sport WHERE not id = any (

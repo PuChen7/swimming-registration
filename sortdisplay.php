@@ -69,11 +69,9 @@
     <?php 
       session_start();
       if (isset($_SESSION['isloggedin']) && $_SESSION["isloggedin"] == true){
-        // check for database connection
-        $conn=mysqli_connect("localhost","root","root","swim_registration");
-        if (!$conn) {
-          die("Connection failed: " . mysqli_connect_error());
-        }
+        // connect to database
+        include 'connect.php';
+        
         if ($_POST["radiosort"] == "name"){
           $sql = "select * from Person where id = (select id from subject) order by name";
           $query = mysqli_query($conn, $sql);

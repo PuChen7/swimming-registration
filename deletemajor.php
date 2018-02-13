@@ -1,12 +1,7 @@
 <?php
   session_start();
-  // check for database connection
-  $conn=mysqli_connect("localhost","root","root","swim_registration");
-
-  if(!$conn)
-  {
-  die("Connection failed: " . mysqli_connect_error());
-  }
+  // connect to database
+  include 'connect.php';
 
   $id = $_GET["id"];
 
