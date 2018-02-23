@@ -1,4 +1,5 @@
 <?php
+// c) 2018, Pu Chen
 // This page is used for user log out.
 // If the log out button is clciked, the session will be destroyed.
 session_start();
